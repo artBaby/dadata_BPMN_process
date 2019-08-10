@@ -2,7 +2,7 @@
 
 To deploy this process to Camunda instance paste WAR file to *webapps* directory on your server.
 
-Note that tasks assign to a *demo* user
+Note that tasks assign to a *demo* user.
 Process model:
 ![Process Model](https://sun9-40.userapi.com/c857720/v857720937/3d871/Q3pJzvV_3nc.jpg "Process Model")
 
