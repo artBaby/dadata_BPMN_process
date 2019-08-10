@@ -1,0 +1,8 @@
+camunda:
+  bpm:
+    admin-user:
+      id: artemii
+      password: artemii
+
+server:
+  port: 8050

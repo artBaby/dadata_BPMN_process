@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0jvqhv3" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.2.3">
+  <bpmn:process id="DadataIntegrationProcess" isExecutable="true">
+    <bpmn:startEvent id="start_event_write_address" name="Initiate task" camunda:initiator="initiator">
+      <bpmn:outgoing>SequenceFlow_107dgmv</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="user_task_show_results" name="Review Coordinates" camunda:assignee="demo">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="latitude" label="Latitude" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="longitude" label="Longitude" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1w4wpj8</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0eaappi</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="end_event_request_completed" name="End">
+      <bpmn:incoming>SequenceFlow_0eaappi</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_107dgmv" sourceRef="start_event_write_address" targetRef="write_address" />
+    <bpmn:sequenceFlow id="SequenceFlow_0eaappi" sourceRef="user_task_show_results" targetRef="end_event_request_completed" />
+    <bpmn:sequenceFlow id="SequenceFlow_1oxj1nw" sourceRef="write_address" targetRef="service_task_send_request" />
+    <bpmn:userTask id="write_address" name="Write Address" camunda:assignee="demo">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="address" label="Address" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+              <camunda:constraint name="minlength" config="3" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_107dgmv</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1oxj1nw</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="service_task_send_request" name="Send request to Dadata" camunda:class="com.artemii.dadata.camunda.TranslateAddressService">
+      <bpmn:incoming>SequenceFlow_1oxj1nw</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1w4wpj8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1w4wpj8" sourceRef="service_task_send_request" targetRef="user_task_show_results" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="DadataIntegrationProcess">
+      <bpmndi:BPMNShape id="StartEvent_03qg2f3_di" bpmnElement="start_event_write_address">
+        <dc:Bounds x="169" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="159" y="145" width="57" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_106anv7_di" bpmnElement="user_task_show_results">
+        <dc:Bounds x="650" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0kcxsnb_di" bpmnElement="end_event_request_completed">
+        <dc:Bounds x="832" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="840" y="145" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_107dgmv_di" bpmnElement="SequenceFlow_107dgmv">
+        <di:waypoint x="205" y="120" />
+        <di:waypoint x="280" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0eaappi_di" bpmnElement="SequenceFlow_0eaappi">
+        <di:waypoint x="750" y="120" />
+        <di:waypoint x="832" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1oxj1nw_di" bpmnElement="SequenceFlow_1oxj1nw">
+        <di:waypoint x="380" y="120" />
+        <di:waypoint x="460" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_191dx3k_di" bpmnElement="write_address">
+        <dc:Bounds x="280" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0htmwx1_di" bpmnElement="service_task_send_request">
+        <dc:Bounds x="460" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1w4wpj8_di" bpmnElement="SequenceFlow_1w4wpj8">
+        <di:waypoint x="560" y="120" />
+        <di:waypoint x="650" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
