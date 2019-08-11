@@ -7,7 +7,9 @@ How to run:
  3. Start process *DadataIntegrationProcess*
  
 Note that tasks assign to a *demo* user.
+
 Process model:
+
 ![Process Model](https://sun9-40.userapi.com/c857720/v857720937/3d871/Q3pJzvV_3nc.jpg "Process Model")
 
 [BPMN file](https://github.com/artBaby/dadata_BPMN_process/blob/master/src/main/resources/DadataIntegrationProcess.bpmn "BPMN file")
